@@ -3,9 +3,12 @@ project "ImGui"
 	language "C++"
     staticruntime "off"
 
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
+	targetdir ("../../../bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
+    objdir ("../../../bin-int/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
+	includedirs{
+		"../GLFW_3_4/include",
+		"./"
+	}
 	files
 	{
 		"imconfig.h",
@@ -18,7 +21,11 @@ project "ImGui"
 		"imstb_rectpack.h",
 		"imstb_textedit.h",
 		"imstb_truetype.h",
-		"imgui_demo.cpp"
+		"imgui_demo.cpp",
+		"backends/imgui_impl_glfw.h",
+		"backends/imgui_impl_glfw.cpp",
+		"backends/imgui_impl_opengl3.h",
+		"backends/imgui_impl_opengl3.cpp"
 	}
 
 	filter "system:windows"
@@ -42,3 +49,12 @@ project "ImGui"
 		runtime "Release"
 		optimize "on"
         symbols "off"
+
+	includedirs
+	{
+		".",
+		"../GLFW_3_4/include",
+		"../glad/include"
+	}
+
+	defines { "IMGUI_ENABLE_IMPL_DEFAULT_CONSTRUCTOR" }
